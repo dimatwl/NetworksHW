@@ -1,0 +1,5 @@
+package ru.spbau.shestavin.networks.rest.request_handlers;
+
+public class ConvertRatesRequestHandler {
+
+}

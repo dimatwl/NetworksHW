@@ -1,0 +1,120 @@
+package ru.spbau.shestavin.networks.rest.request_handlers;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import ru.spbau.shestavin.networks.rest.resources.ApiResult;
+import ru.spbau.shestavin.networks.rest.responses.BaseResponse;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.sun.org.apache.xerces.internal.util.URI.MalformedURIException;
+
+/**
+ * @author DimaTWL 
+ * Represents some base behavior and interface for all request
+ *         handlers
+ */
+public abstract class BaseRequestHandler {
+	
+	/**
+	 * This field used to do all JSON staff.
+	 */
+	public final static Gson GSON = new Gson();
+	
+	private final static String BASE_API_URL = "http://openexchangerates.org/api/";
+	private final static String APP_ID = "8714f952a3734b179f25166c114335b6";
+	private final static String LATEST_METHOD_URL = "latest";
+	private final static String HISTORICAL_METHOD_URL = "historical";
+	
+	private final static String URL_PREFIX = BASE_API_URL;
+	private final static String URL_SUFFIX = ".json?app_id=" + APP_ID;
+	
+	public Map<String, Double> getCurrentRates() throws IOException {
+		return changeBase("RUB", getRates(LATEST_METHOD_URL));
+	}
+	
+	public Map<String, Double> getLastTenDaysRates(String currencyName) throws IOException {
+		Map<String, Double> result = new TreeMap<String, Double>();
+		Calendar today = Calendar.getInstance();
+		for (int i = 1; i < 11; ++i) {
+			Calendar prevDay = (Calendar)today.clone();
+			prevDay.add(Calendar.DATE, -i);
+			Map<String, Double> prevRates = getHistoricalRates(prevDay);
+			result.put(calendarToString(prevDay), prevRates.get(currencyName));
+		}
+		return result;
+	}
+	
+	private String calendarToString(Calendar calendar) {
+		Integer day = calendar.get(Calendar.DAY_OF_MONTH);
+		Integer month = calendar.get(Calendar.MONTH) + 1;
+		Integer year = calendar.get(Calendar.YEAR);
+		String yearStr = year.toString();
+		String monthStr;
+		if (month < 10) {
+			monthStr = "0" + month.toString();
+		} else {
+			monthStr = month.toString();
+		}
+		String dayStr;
+		if (day < 10) {
+			dayStr = "0" + day.toString();
+		} else {
+			dayStr = day.toString();
+		}
+		String dateInString = yearStr + "-" + monthStr + "-" + dayStr;
+		return dateInString;
+	}
+	
+	private Map<String, Double> getHistoricalRates(Calendar calendar) throws IOException {
+		String dateInString = calendarToString(calendar);
+		return changeBase("RUB", getRates(HISTORICAL_METHOD_URL + "/" + dateInString));
+	}
+	
+	private Map<String, Double> changeBase(String newBase, Map<String, Double> rates) {
+		Double newBaseValue = rates.get(newBase);
+		if (null == newBaseValue) {
+			return null;
+		}
+		for (Map.Entry<String, Double> entry : rates.entrySet()) {
+		    entry.setValue(entry.getValue()/newBaseValue);
+		}
+		return rates;
+	}
+	
+	private Map<String, Double> getRates(String method) throws MalformedURLException, IOException {
+		URL url = new URL(URL_PREFIX + method + URL_SUFFIX);
+		BufferedReader reader = null;
+		StringBuilder input = new StringBuilder();
+		try {
+			URLConnection connection = url.openConnection();
+			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null) 
+				input.append(line);
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			try {
+				if (null != reader) {
+					reader.close();
+				}
+			} catch (IOException e) {
+				throw e;
+			}
+		}
+        ApiResult result = GSON.fromJson(input.toString(), ApiResult.class);
+        return result.getRates();
+	}
+}

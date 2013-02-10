@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;cal&apos; in &apos;ru.spbau.shestavin.networks.rest.request_handlers.BaseRequestHandler.getHistoricalRates(...)&apos; to &apos;calendar&apos;&#x0A;- Original project: &apos;REST&apos;&#x0A;- Original element: &apos;ru.spbau.shestavin.networks.rest.request_handlers.BaseRequestHandler.getHistoricalRates(Date).cal&apos;&#x0A;- Renamed element: &apos;cal&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;cal&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;ru.spbau.shestavin.networks.rest.request_handlers{BaseRequestHandler.java[BaseRequestHandler~getHistoricalRates~QDate;@cal!1528!1565!1537!1539!QCalendar;!0!false" name="calendar" references="true" stamp="1360462596076" version="1.0"/>
+</session>

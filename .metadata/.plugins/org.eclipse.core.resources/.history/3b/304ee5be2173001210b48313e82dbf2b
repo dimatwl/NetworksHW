@@ -1,0 +1,47 @@
+package ru.spbau.shestavin.networks.rest.request_handlers;
+
+import java.io.IOException;
+import java.util.Map;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+/**
+ * @author DimaTWL 
+ * Handling all requests on "rest/exchangerates" 
+ * URL: rest/exchangerates 
+ * Method: GET 
+ * Required response: JSON or HTML
+ */
+@Path("/exchangerates")
+public class CurrentRatesRequestHandler extends BaseRequestHandler {
+
+	/**
+	 * This method used to handle GET request on "rest/exchangerates" to produce JSON
+	 * 
+	 * @return the JSON witch will be sent to client
+	 */
+	/*@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getJSON() throws IOException {
+		return GSON.toJson(getCurrentRates());
+	}*/
+	
+	/**
+	 * This method used to handle GET request on "rest/exchangerates" to produce HTML
+	 * 
+	 * @return the HTML witch will be sent to client
+	 */
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public String getHTML() throws IOException {
+		String result = "<table>";
+		for (Map.Entry<String, Double> entry : getCurrentRates().entrySet()) {
+			result += "<tr>" + entry.getKey() + " : " + entry.getValue() + "</tr>";
+		}
+		result += "</table>";
+		return result;
+	}
+}
