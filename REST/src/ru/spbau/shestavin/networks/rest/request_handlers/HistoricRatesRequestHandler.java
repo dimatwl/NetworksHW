@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * @author DimaTWL 
- * Handling all requests on "/historicrates/{currencyName}" 
+ * Handling all requests on "rest/historicrates/{currencyName}" 
  * URL: rest/historicrates/{currencyName} 
  * Method: GET 
  * Required response: JSON or HTML
