@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/historicrates/{currencyName}")
 public class HistoricRatesRequestHandler extends BaseRequestHandler {
 	/**
-	 * This method used to handle GET request on "rest/historicrates/{currencyName}" to produce JSON
+	 * This method used to handle GET request on "/historicrates/{currencyName}" to produce JSON
 	 * 
 	 * @return the JSON witch will be sent to client
 	 */
@@ -30,7 +30,7 @@ public class HistoricRatesRequestHandler extends BaseRequestHandler {
 	}
 	
 	/**
-	 * This method used to handle GET request on "rest/historicrates/{currencyName}" to produce HTML
+	 * This method used to handle GET request on "/historicrates/{currencyName}" to produce HTML
 	 * 
 	 * @return the HTML witch will be sent to client
 	 */

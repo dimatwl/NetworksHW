@@ -10,8 +10,8 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * @author DimaTWL 
- * Handling all requests on "rest/exchangerates" 
- * URL: rest/exchangerates 
+ * Handling all requests on "/exchangerates" 
+ * URL: /exchangerates 
  * Method: GET 
  * Required response: JSON or HTML
  */
@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 public class CurrentRatesRequestHandler extends BaseRequestHandler {
 
 	/**
-	 * This method used to handle GET request on "rest/exchangerates" to produce JSON
+	 * This method used to handle GET request on "/exchangerates" to produce JSON
 	 * 
 	 * @return the JSON witch will be sent to client
 	 */
@@ -30,7 +30,7 @@ public class CurrentRatesRequestHandler extends BaseRequestHandler {
 	}
 	
 	/**
-	 * This method used to handle GET request on "rest/exchangerates" to produce HTML
+	 * This method used to handle GET request on "/exchangerates" to produce HTML
 	 * 
 	 * @return the HTML witch will be sent to client
 	 */
