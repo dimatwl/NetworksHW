@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -W -Wall
-LFLAGS = -L/opt/local/lib -lboost_system-mt -lboost_thread-mt
+LFLAGS = -L/opt/local/lib -lboost_system-mt -lboost_thread-mt -lboost_date_time-mt
 BOOST = -I/opt/local/include
 
 SERVEROBJECTS = chat_server.o
@@ -24,7 +24,7 @@ $(CLIENT): $(CLIENTOBJECTS)
 %.o: %.cpp
 	$(CC) $(CFLAGS) $(BOOST) -c $< 
 
-chat_server.o: chat_server.hpp chat_session.hpp chat_room.hpp chat_message.hpp chat_server.cpp
+chat_server.o: chat_server.hpp chat_session.hpp chat_message.hpp chat_server.cpp
 chat_client.o: chat_client.hpp chat_message.hpp chat_client.cpp
 
 clean:
