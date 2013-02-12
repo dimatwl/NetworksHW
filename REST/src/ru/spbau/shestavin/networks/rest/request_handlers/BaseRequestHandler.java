@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.ws.rs.WebApplicationException;
+
 import ru.spbau.shestavin.networks.rest.resources.ApiResult;
 import ru.spbau.shestavin.networks.rest.responses.BaseResponse;
 
@@ -52,6 +54,9 @@ public abstract class BaseRequestHandler {
 			prevDay.add(Calendar.DATE, -i);
 			Map<String, Double> prevRates = getHistoricalRates(prevDay);
 			result.put(calendarToString(prevDay), prevRates.get(currencyName));
+			if (null == prevRates.get(currencyName)) {
+				throw new WebApplicationException(400);
+			}
 		}
 		return result;
 	}
@@ -60,15 +65,17 @@ public abstract class BaseRequestHandler {
 		Map<String, Double> rates = getCurrentRates();
 		Double baseValue = rates.get(baseCurrencyName);
 		Double destinationValue = rates.get(destinationCurrencyName);
-		if (null == baseValue || null == destinationValue) {
-			return null;
+		Double baseAmountDouble = null;
+		try {
+			baseAmountDouble = Double.parseDouble(baseCurrencyAmount);
+		} catch (NumberFormatException e) {
+			throw new WebApplicationException(400);
+		}
+		if (null == baseValue || null == destinationValue || baseAmountDouble < 0) {
+			throw new WebApplicationException(400);
 		}
 		Double result = null;
-		try {
-			result = (destinationValue / baseValue) * Double.parseDouble(baseCurrencyAmount);
-		} catch (NumberFormatException e) {
-			result = null;
-		}
+		result = (destinationValue / baseValue) * baseAmountDouble;
 		return result;
 	}
 	
