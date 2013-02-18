@@ -90,6 +90,7 @@ public:
         connectKnownCounterparts(knownCounterparts);
         startAcceptCounterparts();                                                                  
         startAcceptParticipants();
+        checkEarliestMessageStatus();
                                                                           
     }
     
@@ -204,12 +205,14 @@ void ChatServer::connectKnownCounterparts(const vector<tcp::resolver::iterator>&
 void ChatServer::deliverEarliestMessage() {
     //IMPORTANT
     //This method MUST NOT be called if some counterpart has earlier messages.
-    ChatMessage earliestMessage = localMessageQueue.front();
-    localMessageQueue.pop();
-    globalMessageQueue.push_back(earliestMessage);
-    for (set<shared_ptr<Counterpart> >::iterator i = counterparts.begin(); i != counterparts.end(); ++i) {
-        (*i)->deliverMessage(earliestMessage);  //Странное дело. Вроде оператор -> прожимает кучу разыменовываний разом. А тут не вышло (((
+    if (!localMessageQueue.empty()) {
+        ChatMessage earliestMessage = localMessageQueue.front();
+        localMessageQueue.pop();
+        globalMessageQueue.push_back(earliestMessage);
+        for (set<shared_ptr<Counterpart> >::iterator i = counterparts.begin(); i != counterparts.end(); ++i) {
+            (*i)->deliverMessage(earliestMessage);  //Странное дело. Вроде оператор -> прожимает кучу разыменовываний разом. А тут не вышло (((
                                         //Видимо работает только для указателей...
+        }
     }
 }
     
@@ -222,7 +225,7 @@ void ChatServer::checkEarliestMessageStatus() {
             (*i)->tryEarliest(earliestMessageTime);
         }
     } else {
-        if (counterparts.empty()) {
+        if (!localMessageQueue.empty()) {
             deliverEarliestMessage();
         }
         messageSendTimer.expires_from_now(milliseconds(100));
