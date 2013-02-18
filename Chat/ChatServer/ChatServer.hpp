@@ -135,15 +135,14 @@ public:
             lastMessageEarliest.clear();
             if (messageEarliest) {
                 deliverEarliestMessage();
-            } else {
-                //It's can be point to call checkEarliestMessageStatus via timer, but it's unconvinient
-                //because this method wouldn't be called if localQueue is empty.
-                //Now this case is handled.
-                messageSendTimer.expires_from_now(milliseconds(100));
-                messageSendTimer.async_wait(bind(
-                                                 &ChatServer::checkEarliestMessageStatus,
-                                                 this));
-            }
+            } 
+            //It's can be point to call checkEarliestMessageStatus via timer, but it's unconvinient
+            //because this method wouldn't be called if localQueue is empty.
+            //Now this case is handled.
+            messageSendTimer.expires_from_now(milliseconds(100));
+            messageSendTimer.async_wait(bind(
+                                             &ChatServer::checkEarliestMessageStatus,
+                                             this));
         }
     }
     

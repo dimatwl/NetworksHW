@@ -23,7 +23,7 @@ using std::vector;
 int main(int argc, char* argv[]) {
     try
     {
-        if (argc < 3 && argc % 2 == 0)
+        if (argc < 3 || argc % 2 == 0)
         {
             std::cerr << "Usage: ChatServer <PortForParticipants> <PortForCounterpart> [<CounterpartHost> <CounterpartPort>]\n";
             return 1;
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
         vector<tcp::resolver::iterator> counterparts;
         tcp::resolver resolver(ioService);
         for (int i = 3; i < argc; i += 2) {
-            tcp::resolver::query query(argv[2], argv[3]);
+            tcp::resolver::query query(argv[i], argv[i + 1]);
             counterparts.push_back(resolver.resolve(query));
         }
         
