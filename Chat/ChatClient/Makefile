@@ -4,7 +4,7 @@ LFLAGS = -L/opt/local/lib -lboost_system-mt -lboost_thread-mt -lboost_date_time-
 BOOST = -I/opt/local/include
 
 CLIENTOBJECTS = ChatClient.o
-CLIENT = ./build/ChatClient
+CLIENT = ChatClient
 
 ALL = $(CLIENT)
 

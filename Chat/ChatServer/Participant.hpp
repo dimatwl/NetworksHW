@@ -129,7 +129,7 @@ class Participant : public boost::enable_shared_from_this<Participant> {
                 messageString = name + ": " + messageString;
             }
             ChatMessage message(messageString);
-            server.putToGlobalQueue(message);
+            server.putToLocalQueue(message);
             lastRead.resize(OP_CODE_SIZE);
             async_read(socket, buffer(lastRead, OP_CODE_SIZE), bind(
                                                                     &Participant::readOpCodeHandler, shared_from_this(),

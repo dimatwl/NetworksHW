@@ -14,6 +14,7 @@
 #include <math.h>
 
 #include <boost/cstdint.hpp>
+#include "boost/date_time/posix_time/posix_time.hpp"
 
 #include "Message.hpp"
 
@@ -23,14 +24,16 @@ using std::vector;
 using std::string;
 using boost::uint8_t;
 using boost::uint16_t;
-
-class ChatMessage : public Message {
-    string content;
+using boost::posix_time::ptime;
+using boost::posix_time::microsec_clock;
     
+class ChatMessage : public Message {
+    ptime timeRecieved;
+    string content;
     
 public:
     
-    ChatMessage(string content) : content(content) {
+    ChatMessage(string content) : timeRecieved(microsec_clock::universal_time()), content(content) {
         if (content.size() >= pow(2, 16)) {
             content = string(content, 0, pow(2, 16) - 1);
         }
@@ -45,6 +48,10 @@ public:
         toSend.push_back(lowPart);
         std::copy(content.begin(), content.end(), back_inserter(toSend));
         return toSend;
+    }
+    
+    ptime getTime() {
+        return timeRecieved;
     }
 };
     

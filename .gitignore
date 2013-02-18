@@ -116,3 +116,16 @@ Chat/chat_server/chat_server.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcdebugger
 Chat/chat_server/chat_server.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcschemes/chat_server.xcscheme
 Chat/chat_server/chat_server.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcschemes/server.xcscheme
 Chat/chat_server/chat_server.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcschemes/xcschememanagement.plist
+Chat/ChatClient/ChatClient
+Chat/ChatClient/ChatClient.o
+Chat/ChatClient/ChatClient.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+Chat/ChatClient/ChatClient.xcodeproj/project.xcworkspace/xcuserdata/DimaTWL.xcuserdatad/UserInterfaceState.xcuserstate
+Chat/ChatClient/ChatClient.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcschemes/ChatClient.xcscheme
+Chat/ChatClient/ChatClient.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcschemes/xcschememanagement.plist
+Chat/ChatServer/ChatServer
+Chat/ChatServer/ChatServer.o
+Chat/ChatServer/ChatServer.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+Chat/ChatServer/ChatServer.xcodeproj/project.xcworkspace/xcuserdata/DimaTWL.xcuserdatad/UserInterfaceState.xcuserstate
+Chat/ChatServer/ChatServer.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist
+Chat/ChatServer/ChatServer.xcodeproj/xcuserdata/DimaTWL.xcuserdatad/xcschemes/ChatServer.xcscheme
+xcschememanagement.plist
